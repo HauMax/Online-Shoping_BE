@@ -1,4 +1,5 @@
-package PACKAGE_NAME;
-
-public interface Finansable {
+public interface finansable {
+    double checkBalance();
+    boolean hasAmountMoney(double amount);
+    String getFinanStatus();
 }
