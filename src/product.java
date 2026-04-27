@@ -1,28 +1,36 @@
 import java.util.ArrayList;
 
-public class product extends category {
-    // Список для хранения всех товаров
-    public static ArrayList<product> productList = new ArrayList<>();
+public class product extends category implements payable {
+    public static java.util.ArrayList<product> productList = new java.util.ArrayList<>();
+    private boolean paidStatus = false;
 
     public product(String title, Double price, String description) {
         super(title, price, description);
-        productList.add(this); // Автоматически добавляем каждый новый товар в список
+        productList.add(this);
     }
 
     @Override
-    public void showInfo() {
-        System.out.println("ID: " + get_id() +
-                " Название: " + get_Title() +
-                " Цена: " + get_Price() + " руб." +
-                " Описание: " + get_Description());
+    public double getFinalPrice() { return get_Price(); }
+
+    @Override
+    public void pay(double amount) {
+        if (amount >= getFinalPrice()) {
+            this.paidStatus = true;
+            System.out.println("Товар '" + get_Title() + "' оплачен.");
+        }
     }
 
-    // Статический метод для вывода всего списка
+    @Override
+    public boolean isPaid() { return paidStatus; }
+
+    @Override
+    public void showInfo() {
+        System.out.println(this.toString() + (paidStatus ? " ОПЛАЧЕНО" : " НЕ ОПЛАЧЕНО"));
+    }
+
     public static void showAllProducts() {
         System.out.println("\n--- Список всех товаров ---");
-        for (product p : productList) {
-            p.showInfo();
-        }
+        for (product p : productList) p.showInfo();
     }
 }
 
